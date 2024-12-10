@@ -1,0 +1,103 @@
+class Node:
+    def __init__(self, d):
+        self.data = d
+        self.next = None
+
+class LinkedList:
+    def __init__(self, d=None):
+        if (d == None):
+            self.header  = None
+            self.current = None
+        else:
+            self.header = Node(d)
+            self.current = self.header
+        
+    def insertBeginning(self, d):
+        if (self.header == None):
+            self.header = Node(d)
+            self.current = self.header
+        else:
+            tmp = Node(d)
+            tmp.next = self.header
+            self.header = tmp
+
+    
+    def insertCurrentNext(self, d):
+        if (self.header == None):
+            self.header = Node(d)
+            self.current = self.header
+        else:
+            tmp = Node(d)
+            tmp.next = self.current.next
+            self.current.next = tmp
+    
+    def removeBeginning(self):
+       if (self.header == None):
+           return None
+       else:
+           removed = self.header.data
+           self.header = self.header.next
+           self.current = self.header
+           return removed
+        
+    def removeCurrentNext(self):
+        if (self.current.next == None):
+            return None
+        else:
+            removed = self.current.next.data
+            self.current.next = self.current.next.next
+            return removed
+        
+    def nextCurrent(self):
+        if (self.current.next is not None):
+            self.current = self.current.next
+        else:
+            self.current = self.header
+        
+    def resetCurrent(self):
+        if (self.header is not None):
+            self.current = self.header
+        else:
+            return None
+        
+    def getCurrent(self):
+        if (self.current is not None):
+            return self.current.data
+        else:
+            return None
+    
+    def printList(self,msg = '----'):
+        p = self.header
+        print("----",msg)
+        while (p is not None):
+            print(p.data, end=' ')
+            p = p.next
+        if (self.current is not None):
+            print("Currrent:", self.current.data)
+        else:
+            print("Empty linked list")
+        input("=======================")
+
+
+def main():
+    mylist = LinkedList()
+    mylist.printList("List created")
+    mylist.insertBeginning(76)
+    mylist.insertBeginning(88)
+    mylist.insertBeginning(11)
+    mylist.insertBeginning(34)
+    mylist.insertBeginning(56)
+    mylist.insertBeginning(91)
+    mylist.printList("Inserting numbers")
+    mylist.nextCurrent()
+    mylist.nextCurrent()
+    mylist.nextCurrent()
+    mylist.printList("Pushing current to third element in the list")
+    mylist.removeCurrentNext()
+    mylist.printList("Removing the next element")
+    mylist.insertCurrentNext(23)
+    mylist.printList("Adding 23 next to current")
+
+# ===========================================
+
+main()
